@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Interact : MonoBehaviour
 {
+    public Stove stove;
+
     public string triggerName = "";
 
     public GameObject BurgerTopPrefab;
@@ -12,6 +14,7 @@ public class Interact : MonoBehaviour
     public GameObject BurgerPattiesPrefab;
 
     public GameObject heldItem;
+    public string heldItemName;
 
     // Start is called before the first frame update
     void Start()
@@ -28,21 +31,36 @@ public class Interact : MonoBehaviour
             {
                 heldItem = Instantiate(BurgerTopPrefab, transform, false);
                 heldItem.transform.localPosition = new Vector3(0, 2, 2);
+                heldItemName = "BurgerTop";
             }
-            else if(triggerName == "Burger_Bottom")
+            if(triggerName == "Burger_Bottom")
                 {
                     heldItem = Instantiate(BurgerBottomPrefab, transform, false);
                     heldItem.transform.localPosition = new Vector3(0, 3, 2);
+                    heldItemName = "BurgerBottom";
                 }
-            else if (triggerName == "Burger_Greens")
+            //if (triggerName == "Burger_Greens")
+            //{
+                //heldItem = Instantiate(BurgerGreensPrefab, transform, false);
+                //heldItem.transform.localPosition = new Vector3(0, 2, 2);
+                //heldItemName = "BurgerGreens";
+            //}
+            //if (triggerName == "Burger_Patties")
+            //{
+                //heldItem = Instantiate(BurgerPattiesPrefab, transform, false);
+                //heldItem.transform.localPosition = new Vector3(0, 2, 2);
+                //heldItemName = "BurgerPatties";
+            //}
+            if (triggerName == "Stove")
             {
-                heldItem = Instantiate(BurgerGreensPrefab, transform, false);
-                heldItem.transform.localPosition = new Vector3(0, 2, 2);
-            }
-            else if (triggerName == "Burger_Patties")
-            {
-                heldItem = Instantiate(BurgerPattiesPrefab, transform, false);
-                heldItem.transform.localPosition = new Vector3(0, 2, 2);
+                if(heldItemName == "BurgerTop" || heldItemName == "BurgerBottom")
+                {
+                    stove.ToastBread();
+                }
+                else
+                {
+                    print("Nothing to toast!");
+                }
             }
         }
     }
