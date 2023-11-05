@@ -33,12 +33,12 @@ public class Interact : MonoBehaviour
                 heldItem.transform.localPosition = new Vector3(0, 2, 2);
                 heldItemName = "BurgerTop";
             }
-            if(triggerName == "Burger_Bottom")
-                {
-                    heldItem = Instantiate(BurgerBottomPrefab, transform, false);
-                    heldItem.transform.localPosition = new Vector3(0, 3, 2);
-                    heldItemName = "BurgerBottom";
-                }
+            //if(triggerName == "Burger_Bottom")
+                //{
+                    //heldItem = Instantiate(BurgerBottomPrefab, transform, false);
+                    //heldItem.transform.localPosition = new Vector3(0, 3, 2);
+                    //heldItemName = "BurgerBottom";
+                //}
             //if (triggerName == "Burger_Greens")
             //{
                 //heldItem = Instantiate(BurgerGreensPrefab, transform, false);
@@ -53,16 +53,39 @@ public class Interact : MonoBehaviour
             //}
             if (triggerName == "Stove")
             {
-                if(heldItemName == "BurgerTop" || heldItemName == "BurgerBottom")
+                if(heldItemName == "BurgerTop")
                 {
-                    stove.ToastBread();
+                    stove.ToastBurgerTop();
+                    PlaceHeldItem();
                 }
                 else
                 {
-                    print("Nothing to toast!");
+                    if(stove.cookedFood == "ToastedTop")
+                    {
+                        heldItem = Instantiate(BurgerTopPrefab, transform, false);
+                        heldItem.transform.localPosition = new Vector3(0, 2, 2);
+                        heldItemName = "ToastedBurgerTop";
+                        stove.CleanStove();
+
+                    }
+                }
+            }
+
+            if(triggerName == "Receivers")
+            {
+                if(heldItemName == "ToastedBurgerTop")
+                {
+                    PlaceHeldItem();
+                    GameObject.Find("Receivers/Burger/ToastedBurgerTop").SetActive(true);
                 }
             }
         }
+    }
+
+    private void PlaceHeldItem()
+    {
+        Destroy(heldItem);
+        heldItemName = "";
     }
 
     private void OnTriggerEnter(Collider other)
