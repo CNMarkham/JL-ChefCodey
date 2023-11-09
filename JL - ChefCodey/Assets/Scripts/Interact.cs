@@ -12,6 +12,7 @@ public class Interact : MonoBehaviour
     public GameObject BurgerBottomPrefab;
     public GameObject BurgerGreensPrefab;
     public GameObject BurgerPattiesPrefab;
+    public GameObject CookedPatty;
 
     public GameObject heldItem;
     public string heldItemName;
@@ -29,28 +30,21 @@ public class Interact : MonoBehaviour
         {
             if(triggerName == "Burger_Top")
             {
-                heldItem = Instantiate(BurgerTopPrefab, transform, false);
-                heldItem.transform.localPosition = new Vector3(0, 2, 2);
-                heldItemName = "BurgerTop";
+                PickUpItem(BurgerTopPrefab, "BurgerTop", new Vector3(0, 2, 2));
             }
-            //if(triggerName == "Burger_Bottom")
-                //{
-                    //heldItem = Instantiate(BurgerBottomPrefab, transform, false);
-                    //heldItem.transform.localPosition = new Vector3(0, 3, 2);
-                    //heldItemName = "BurgerBottom";
-                //}
-            //if (triggerName == "Burger_Greens")
-            //{
-                //heldItem = Instantiate(BurgerGreensPrefab, transform, false);
-                //heldItem.transform.localPosition = new Vector3(0, 2, 2);
-                //heldItemName = "BurgerGreens";
-            //}
-            //if (triggerName == "Burger_Patties")
-            //{
-                //heldItem = Instantiate(BurgerPattiesPrefab, transform, false);
-                //heldItem.transform.localPosition = new Vector3(0, 2, 2);
-                //heldItemName = "BurgerPatties";
-            //}
+            if(triggerName == "Burger_Bottom")
+            {
+                PickUpItem(BurgerBottomPrefab, "BurgerBottom", new Vector3(0, 3, 2));
+            }
+            if (triggerName == "Burger_Greens")
+            {
+                PickUpItem(BurgerGreensPrefab, "BurgerGreens", new Vector3(0, 2, 2));
+            }
+            if (triggerName == "Burger_Patties")
+            {
+                PickUpItem(BurgerPattiesPrefab, "BurgerPatties", new Vector3(0, 2, 2));
+            }
+
             if (triggerName == "Stove")
             {
                 if(heldItemName == "BurgerTop")
@@ -58,15 +52,32 @@ public class Interact : MonoBehaviour
                     stove.ToastBurgerTop();
                     PlaceHeldItem();
                 }
+                else if (heldItemName == "BurgerBottom")
+                {
+                    stove.ToastBurgerBottom();
+                    PlaceHeldItem();
+                }
+                else if (heldItemName == "BurgerPatties")
+                {
+                    stove.CookPatty();
+                    PlaceHeldItem();
+                }
                 else
                 {
                     if(stove.cookedFood == "ToastedTop")
                     {
-                        heldItem = Instantiate(BurgerTopPrefab, transform, false);
-                        heldItem.transform.localPosition = new Vector3(0, 2, 2);
-                        heldItemName = "ToastedBurgerTop";
+                        PickUpItem(BurgerTopPrefab, "ToastedBurgerTop", new Vector3(0, 2, 2));
                         stove.CleanStove();
-
+                    }
+                    if (stove.cookedFood == "ToastedBottom")
+                    {
+                        PickUpItem(BurgerBottomPrefab, "ToastedBurgerBottom", new Vector3(0, 3, 2));
+                        stove.CleanStove();
+                    }
+                    if (stove.cookedFood == "CookedPatty")
+                    {
+                        PickUpItem(BurgerPattiesPrefab, "CookedPatties", new Vector3(0, 2, 2));
+                        stove.CleanStove();
                     }
                 }
             }
@@ -82,6 +93,13 @@ public class Interact : MonoBehaviour
         }
     }
 
+
+    private void PickUpItem(GameObject itemPrefab, string itemName, Vector3 offset)
+    {
+        heldItem = Instantiate(itemPrefab, transform, false);
+        heldItem.transform.localPosition = offset;
+        heldItemName = itemName;
+    }
     private void PlaceHeldItem()
     {
         Destroy(heldItem);
