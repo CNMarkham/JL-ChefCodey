@@ -12,7 +12,7 @@ public class Interact : MonoBehaviour
     public GameObject BurgerBottomPrefab;
     public GameObject BurgerGreensPrefab;
     public GameObject BurgerPattiesPrefab;
-    public GameObject CookedPatty;
+    public GameObject CookedPattiesPrefab;
 
     public GameObject heldItem;
     public string heldItemName;
@@ -28,19 +28,19 @@ public class Interact : MonoBehaviour
     {
         if(Input.GetKeyDown("space"))
         {
-            if(triggerName == "Burger_Top")
+            if(triggerName == "Burger_Top" && heldItemName == "")
             {
                 PickUpItem(BurgerTopPrefab, "BurgerTop", new Vector3(0, 2, 2));
             }
-            if(triggerName == "Burger_Bottom")
+            if(triggerName == "Burger_Bottom" && heldItemName == "")
             {
                 PickUpItem(BurgerBottomPrefab, "BurgerBottom", new Vector3(0, 3, 2));
             }
-            if (triggerName == "Burger_Greens")
+            if (triggerName == "Burger_Greens" && heldItemName == "")
             {
                 PickUpItem(BurgerGreensPrefab, "BurgerGreens", new Vector3(0, 2, 2));
             }
-            if (triggerName == "Burger_Patties")
+            if (triggerName == "Burger_Patties" && heldItemName == "")
             {
                 PickUpItem(BurgerPattiesPrefab, "BurgerPatties", new Vector3(0, 2, 2));
             }
@@ -76,7 +76,7 @@ public class Interact : MonoBehaviour
                     }
                     if (stove.cookedFood == "CookedPatty")
                     {
-                        PickUpItem(BurgerPattiesPrefab, "CookedPatties", new Vector3(0, 2, 2));
+                        PickUpItem(CookedPattiesPrefab, "CookedPatties", new Vector3(0, 2, 2));
                         stove.CleanStove();
                     }
                 }
@@ -88,6 +88,21 @@ public class Interact : MonoBehaviour
                 {
                     PlaceHeldItem();
                     GameObject.Find("Receivers/Burger/ToastedBurgerTop").SetActive(true);
+                }
+                if (heldItemName == "ToastedBurgerBottom")
+                {
+                    PlaceHeldItem();
+                    GameObject.Find("Receivers/Burger/ToastedBurgerBottom").SetActive(true);
+                }
+                if (heldItemName == "CookedPatties")
+                {
+                    PlaceHeldItem();
+                    GameObject.Find("Receivers/Burger/CookedBurgerPatties").SetActive(true);
+                }
+                if (heldItemName == "BurgerGreens")
+                {
+                    PlaceHeldItem();
+                    GameObject.Find("Receivers/Burger/BurgerGreens").SetActive(true);
                 }
             }
         }

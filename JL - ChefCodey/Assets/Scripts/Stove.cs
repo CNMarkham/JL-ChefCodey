@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Stove : MonoBehaviour
 {
-
+    [Header("Prefabs")]
     public GameObject toast;
     public GameObject bottomtoast;
     public GameObject cookedpatty;
