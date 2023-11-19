@@ -146,4 +146,15 @@ public class Interact : MonoBehaviour
     {
         triggerName = "";
     }
+
+    public void ServeBurger(GameObject burgerTable)
+    {
+        Debug.Log("ServeBurger called" + burgerTable);
+        PlaceHeldItem();
+        GameObject.Find("TableReceivers/" + burgerTable.name + "/Tray_Blue").SetActive(true);
+        GameObject.Find("TableReceivers/" + gameObject.name + "/ToastedBurgerTop").SetActive(true);
+        GameObject.Find("TableReceivers/" + gameObject.name + "/BurgerGreens").SetActive(true);
+        GameObject.Find("TableReceivers/" + gameObject.name + "/CookedBurgerPatties").SetActive(true);
+        GameObject.Find("TableReceivers/" + gameObject.name + "/ToastedBurgerBottom").SetActive(true);
+    }
 }
