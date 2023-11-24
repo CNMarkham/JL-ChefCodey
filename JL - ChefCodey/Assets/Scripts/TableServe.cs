@@ -5,28 +5,34 @@ using UnityEngine;
 public class TableServe : MonoBehaviour
 {
     public Interact interact;
+    public bool playerCollided;
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerCollided = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-    }
-    //oncollisionenter check if tag is player, update every frame space + checks + interact. oncollision exit maybe
-    private void OnCollisionStay(Collision collision)
-    {
-        if(Input.GetKeyDown("space"))
+        if(playerCollided == true)
         {
-            Debug.Log("CollidedPLayer");
-            if(collision.gameObject.tag == "Player" && interact.heldItemName == "BurgerComplete" && GameObject.Find("TableReceivers/" + gameObject.name + "/Tray_Blue").activeInHierarchy == false)
+            if(Input.GetKeyDown("space"))
             {
-                Debug.Log("space + burgercomplete + notactive");
-                interact.ServeBurger(gameObject);
+
+                if(interact.heldItemName == "BurgerComplete" && GameObject.Find("TableReceivers/" + gameObject.name + "/Tray_Blue").activeInHierarchy == false)
+                {
+                    interact.ServeBurger(gameObject);
+                }
             }
+        }
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+ 
+        if (other.gameObject.tag == "Player")
+        {
+            playerCollided = true;
         }
     }
 }

@@ -118,6 +118,7 @@ public class Interact : MonoBehaviour
                     GameObject.Find("Receivers/Burger/ToastedBurgerBottom").SetActive(false);
                     GameObject.Find("Receivers/Burger/CookedBurgerPatties").SetActive(false);
                     GameObject.Find("Receivers/Burger/BurgerGreens").SetActive(false);
+                    burgerComplete = 0;
                 }
             }
         }
@@ -149,12 +150,12 @@ public class Interact : MonoBehaviour
 
     public void ServeBurger(GameObject burgerTable)
     {
-        Debug.Log("ServeBurger called" + burgerTable);
         PlaceHeldItem();
         GameObject.Find("TableReceivers/" + burgerTable.name + "/Tray_Blue").SetActive(true);
-        GameObject.Find("TableReceivers/" + gameObject.name + "/ToastedBurgerTop").SetActive(true);
-        GameObject.Find("TableReceivers/" + gameObject.name + "/BurgerGreens").SetActive(true);
-        GameObject.Find("TableReceivers/" + gameObject.name + "/CookedBurgerPatties").SetActive(true);
-        GameObject.Find("TableReceivers/" + gameObject.name + "/ToastedBurgerBottom").SetActive(true);
+        GameObject.Find("TableReceivers/" + burgerTable.name + "/ToastedBurgerTop").SetActive(true);
+        GameObject.Find("TableReceivers/" + burgerTable.name + "/BurgerGreens").SetActive(true);
+        GameObject.Find("TableReceivers/" + burgerTable.name + "/CookedBurgerPatties").SetActive(true);
+        GameObject.Find("TableReceivers/" + burgerTable.name + "/ToastedBurgerBottom").SetActive(true);
+        
     }
 }
